@@ -14,10 +14,12 @@ public:
 
 private:
 	void* m_curl;
-	bool m_verbosity;
+	globalArgs_t m_cmdArg;
+	returnCodeStruct m_returnCode;
 
-	std::string getFileName(const std::string& url, const std::string& savedir);
-	int readSubLinks(int level, std::string url);
+	std::string getFileName(const std::string& url);
+	bool readSubLinks(int level, const std::string& url);
+	int read(const std::string& url);
 	bool process(const std::string& url, int level);
 };
 

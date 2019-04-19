@@ -36,7 +36,7 @@ void CommandLineAnalizer::show_usage(std::string name)
 
 globalArgs_t CommandLineAnalizer::getCmdArgumentsObject()
 {
-	globalArgs.url = "google.com";
+	globalArgs.url = "kun.uz";
 	return globalArgs;
 }
 

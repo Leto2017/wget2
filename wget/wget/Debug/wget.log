@@ -1,2 +1,5 @@
-﻿  wget.cpp
+﻿  CommandLineAnalizer.cpp
+  main.cpp
+  wget.cpp
+  Generating Code...
   wget.vcxproj -> F:\wget\wget\Debug\wget.exe

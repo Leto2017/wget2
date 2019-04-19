@@ -16,7 +16,7 @@ struct globalArgs_t
 	{
 		recursive = false;
 		noparent = false;
-		verbosity = false;
+		verbosity = true;
 		level = 1;
 		tries = 1;
 	}
@@ -26,10 +26,10 @@ struct returnCodeStruct
 {
 	std::string error;
 	std::string location;
-	int code;
+	long http_code;
 
 	returnCodeStruct()
 	{
-		code = 0;
+		http_code = 0;
 	}
 };

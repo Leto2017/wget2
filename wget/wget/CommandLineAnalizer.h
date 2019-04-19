@@ -30,6 +30,4 @@
 		CommandLineAnalizer() {}
 	
 		globalArgs_t globalArgs;
-        returnCodeStruct returnCode;
-
-	};
+    };
