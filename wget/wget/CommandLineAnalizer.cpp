@@ -3,7 +3,7 @@
 
 #include "CommandLineAnalizer.h"
 
-option longOpts[] = {
+/*option longOpts[] = {
 	{ "help", no_argument, NULL, 'h' },
 	{ "url", required_argument, NULL, 'u' },
 	{ "level", required_argument, NULL, 'l' },
@@ -15,23 +15,8 @@ option longOpts[] = {
 	{ "no-parent", no_argument, NULL, 'n' },
 	{ NULL, no_argument, NULL, 0 }
 };
-
+*/
 std::string optString = "hu:rl:t:n:i:s:v?";
-
-CommandLineAnalizer::CommandLineAnalizer()
-{
-	returnCode.code = 0;
-	globalArgs.recursive = false;
-	globalArgs.noparent = false;
-	globalArgs.verbosity = false;
-	globalArgs.level = 1;
-	globalArgs.tries = 1;
-}
-
-
-CommandLineAnalizer::~CommandLineAnalizer()
-{
-}
 
 void CommandLineAnalizer::show_usage(std::string name)
 {
@@ -47,4 +32,65 @@ void CommandLineAnalizer::show_usage(std::string name)
 		<< "\t-v --verbose = печатать в stdout подробно производимые операции, без этого флага печатать только ошибки\n"
 		<< "\t-h --help =  показать как использовать программу, выдать аргументы консоли\n"
 		<< std::endl;
+}
+
+globalArgs_t CommandLineAnalizer::getCmdArgumentsObject()
+{
+	globalArgs.url = "google.com";
+	return globalArgs;
+}
+
+void CommandLineAnalizer::setParameters(int argc, char** argv)
+{
+#pragma region getopt
+	/*int opt = 0;
+
+	int longIndex;
+	opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
+	while (opt != -1) {
+		switch (opt) {
+		case 'h':
+		case '?':
+			show_usage(argv[0]);
+			return 0;
+
+		case 'u':
+			globalArgs.url = optarg;
+			break;
+
+		case 'l':
+			globalArgs.level = atoi(optarg);
+			break;
+
+		case 't':
+			globalArgs.tries = atoi(optarg);
+			break;
+
+		case 'i':
+			globalArgs.filename = static_cast<std::string>(optarg);
+			break;
+
+		case 's':
+			globalArgs.savedir = static_cast<std::string>(optarg);
+			break;
+
+		case 'n':
+			globalArgs.noparent = true;
+			break;
+
+		case 'r':
+			globalArgs.recursive = true;
+			break;
+
+		case 'v':
+			CommandLineAnalizer::globalArgs.verbosity = true;
+			break;
+
+		default:
+			break;
+		}
+
+		opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
+	}*/
+#pragma endregion
 }
