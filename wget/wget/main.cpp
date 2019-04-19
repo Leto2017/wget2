@@ -12,8 +12,7 @@ int main(int argc, char** argv)
 	auto cmdAnalizer = CommandLineAnalizer::instance();
 	cmdAnalizer->setParameters(argc, argv);
 	Wget downloader;
-	std::string content = downloader.download(cmdAnalizer->getCmdArgumentsObject());
-	std::cout << content << std::endl;
+	bool result = downloader.download(cmdAnalizer->getCmdArgumentsObject());
 	
 	return 0;
 }
