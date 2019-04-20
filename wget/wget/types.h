@@ -7,6 +7,7 @@ struct globalArgs_t
 	bool recursive;
 	bool noparent;
 	bool verbosity;
+	bool getImages;
 	int level;
 	int tries;
 	std::string filename;
@@ -17,6 +18,7 @@ struct globalArgs_t
 		recursive = false;
 		noparent = false;
 		verbosity = true;
+		getImages = false;
 		level = 1;
 		tries = 1;
 	}

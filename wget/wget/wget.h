@@ -18,6 +18,7 @@ private:
 	returnCodeStruct m_returnCode;
 
 	std::string getFileName(const std::string& url);
+	bool downloadImages(const std::string& url);
 	bool readSubLinks(int level, const std::string& url);
 	int read(const std::string& url);
 	bool process(const std::string& url, int level);

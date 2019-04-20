@@ -12,11 +12,12 @@
 	{ "savedir", required_argument, NULL, 's' },
 	{ "verbose", no_argument, NULL, 'v' },
 	{ "recursive", no_argument, NULL, 'r' },
+	{ "getimages", no_argument, NULL, 'im' },
 	{ "no-parent", no_argument, NULL, 'n' },
 	{ NULL, no_argument, NULL, 0 }
 };
 */
-std::string optString = "hu:rl:t:n:i:s:v?";
+std::string optString = "hu:rl:t:n:i:s:g:v?";
 
 void CommandLineAnalizer::show_usage(std::string name)
 {
@@ -29,6 +30,7 @@ void CommandLineAnalizer::show_usage(std::string name)
 		<< "\t-n --no-parent    = загружать страницы не выше по иерархии заданной\n"
 		<< "\t-i --infile=<path> = путь к входному txt файлу со списком http-ссылок\n"
 		<< "\t-s --savedir=<path> = путь до папки, где сохранять html-страницы\n"
+		<< "\t-g --getimages = закачивать картинки с html страницы\n"
 		<< "\t-v --verbose = печатать в stdout подробно производимые операции, без этого флага печатать только ошибки\n"
 		<< "\t-h --help =  показать как использовать программу, выдать аргументы консоли\n"
 		<< std::endl;
@@ -80,6 +82,10 @@ void CommandLineAnalizer::setParameters(int argc, char** argv)
 
 		case 'r':
 			globalArgs.recursive = true;
+			break;
+
+		case 'g':
+			globalArgs.getImages = true;
 			break;
 
 		case 'v':
