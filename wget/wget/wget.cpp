@@ -3,7 +3,8 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-
+#include <direct.h>
+#include <fstream>
 //#include "test_parse2.cpp"
 using namespace std;
 
@@ -162,7 +163,16 @@ int Wget::read(const std::string& url)
 		fprintf(stderr, "\nCODE: (%d) ", m_returnCode.http_code);
 	}
 
-	//std::cout << out.str() << std::endl;
+	if (!m_cmdArg.savedir.empty())
+	{
+		const int dir = _mkdir(m_cmdArg.savedir.c_str());
+	}
+	string filename = getFileName(url);
+	ofstream file;
+	file.open(filename);
+	file << out.str();
+
+	file.close();
 
 	return 0;
 }
