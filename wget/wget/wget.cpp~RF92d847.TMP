@@ -79,6 +79,7 @@ bool Wget::process(const std::string& url, int level)
 			return true;
 	}
 
+	curl_easy_cleanup(m_curl);
 	return true;
 }
 
