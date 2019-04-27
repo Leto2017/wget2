@@ -1,9 +1,9 @@
 #include <iostream> 
-
+#include <getopt.h>
 
 #include "CommandLineAnalizer.h"
 
-/*option longOpts[] = {
+option longOpts[] = {
 	{ "help", no_argument, NULL, 'h' },
 	{ "url", required_argument, NULL, 'u' },
 	{ "level", required_argument, NULL, 'l' },
@@ -16,7 +16,7 @@
 	{ "no-parent", no_argument, NULL, 'n' },
 	{ NULL, no_argument, NULL, 0 }
 };
-*/
+
 std::string optString = "hu:rl:t:n:i:s:g:v?";
 
 void CommandLineAnalizer::show_usage(std::string name)
@@ -45,7 +45,7 @@ globalArgs_t CommandLineAnalizer::getCmdArgumentsObject()
 void CommandLineAnalizer::setParameters(int argc, char** argv)
 {
 #pragma region getopt
-	/*int opt = 0;
+	int opt = 0;
 
 	int longIndex;
 	opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
@@ -54,7 +54,7 @@ void CommandLineAnalizer::setParameters(int argc, char** argv)
 		case 'h':
 		case '?':
 			show_usage(argv[0]);
-			return 0;
+			return ;
 
 		case 'u':
 			globalArgs.url = optarg;
@@ -97,6 +97,6 @@ void CommandLineAnalizer::setParameters(int argc, char** argv)
 		}
 
 		opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
-	}*/
+	}
 #pragma endregion
 }

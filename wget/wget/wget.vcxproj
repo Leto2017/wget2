@@ -131,11 +131,13 @@
   <ItemGroup>
     <ClCompile Include="CommandLineAnalizer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="parser_new.cpp" />
     <ClCompile Include="test_parse2.cpp" />
     <ClCompile Include="wget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandLineAnalizer.h" />
+    <ClInclude Include="parser_new.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="wget.h" />
   </ItemGroup>

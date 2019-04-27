@@ -214,7 +214,7 @@ bool Wget::downloadImages(const std::string& url)
 	CURLcode rc = curl_easy_perform(curlCtx);
 	if (rc)
 	{
-		fprintf(stderr, "Failed to download: %s\n", url);
+		fprintf(stderr, "Failed to download: %s\n", url.c_str());
 		return false;
 	}
 

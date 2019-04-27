@@ -1,6 +1,6 @@
-
+#pragma once
 #include <string>
-//#include <getopt.h>
+
 
 #include "types.h"
 
