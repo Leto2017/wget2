@@ -4,24 +4,6 @@
 
 #include "types.h"
 
-#include <vector>
-#include <iostream>
-using namespace std;
-template <typename T>
-class parser_t
-{
-
-public:
-
-	parser_t() {}
-
-	void parse_link_r(std::vector<T>& s, T t)
-	{
-		cout << t << "\n";
-	}
-
-};
-
 class Wget
 {
 public:
