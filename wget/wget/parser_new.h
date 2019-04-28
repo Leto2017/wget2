@@ -76,6 +76,36 @@ public:
 
 	}
 
+	
+	//--------------------------------------------------
+	/// Method for making full path from html-links
+	///
+	/// In case of not full path it adds "head" before the path.
+
+
+	void add_head(vector<T> &link_list, T head)
+	{
+
+		regex prot_regex("https{0,1}");
+
+		smatch match;
+
+		T tmp;
+
+		for (size_t i = 0; i < link_list.size(); ++i)
+		{
+			tmp = link_list[i];
+
+			regex_search(tmp, match, prot_regex);
+
+			if (match.str() == "")
+			{
+				link_list[i] = head + link_list[i];
+			}
+
+		}
+
+	}
 
 	//--------------------------------------------------
 	/// Method for parsing html-link
