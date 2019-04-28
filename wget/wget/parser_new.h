@@ -18,10 +18,13 @@ public:
 	void parse_link_r(vector<T> &link_list, T string_to_parse)
 	{
 
-		const char *rg = R"((http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?)";
+		//const char *rg = R"((http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?)";
 
 		const char *rg_h = R"(<a\s*[^>]*href\s*=[^>]*>)";
 
+		//const char *rg = "(https{0,1}:\/){0,1}\/+.*(?=\" )";
+
+		const char *rg = ("\"([^\"]+)\"");
 
 		regex http_regex(rg_h);
 		regex link_regex(rg);
@@ -34,22 +37,22 @@ public:
 
 		T tmps = string_to_parse;
 
+
 		while (regex_search(tmps, http_match, http_regex))
 		{
 			tmp = http_match.str();
-
 
 			tmps = http_match.suffix();
 
 			if (regex_search(tmp, link_match, link_regex))
 			{
-				link_list.push_back(link_match.str());
+				link_list.push_back(link_match[1].str());
 			}
 
 		}
 
 	}
-
+	
 	void parse_hostname(T addr, T &protocol, T &hostname, T &tail)
 	{
 		regex prot_regex("https{0,1}");
@@ -84,7 +87,9 @@ public:
 	{
 		regex http_regex("<img.*src.*=.*\".*(?=\" )");
 
-		regex link_regex("(https{0,1}:/){0,1}/+.*");
+		//regex link_regex("(https{0,1}:/){0,1}/+.*(?=\" )");
+		
+		regex link_regex("\"([^\"]+)\"");
 
 		smatch http_match;
 		smatch link_match;
@@ -100,7 +105,12 @@ public:
 				tmp = http_match[i].str();
 				if (regex_search(tmp, link_match, link_regex))
 				{
-					for (size_t j = 0; j < link_match.size(); ++j)
+
+					//buf = link_match[0];
+
+					link_list.push_back(link_match[1]);
+
+					/*for (size_t j = 0; j < link_match.size(); ++j)
 					{
 						if (link_match[j].matched)
 						{
@@ -108,7 +118,7 @@ public:
 							link_list.push_back(link_match[j]);
 						}
 
-					}
+					}*/
 				}
 
 			}
