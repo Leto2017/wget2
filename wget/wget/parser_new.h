@@ -53,7 +53,7 @@ public:
 
 	}
 	
-	void parse_hostname(T addr, T &protocol, T &hostname, T &tail)
+	void parse_hostname(T addr, T &protocol, T &hostname, T &tail, T prot, T host )
 	{
 		regex prot_regex("https{0,1}");
 
@@ -70,17 +70,32 @@ public:
 
 		protocol = match[0];
 
-		tmp = match.suffix();
+		if (protocol == "")
+		{
+			protocol = prot;
+
+			tmp = addr;
+		}
+		else 
+			tmp = match.suffix();
 
 		regex_search(tmp, match, host_regex);
 
-		tmp = match.suffix();
+		if (match.str() != "")
+		{
+			tmp = match.suffix();
 
-		regex_search(tmp, match, host2_regex);
+			regex_search(tmp, match, host2_regex);
 
-		hostname = match.prefix();  //тут надо убирать www или нет?
-		tail = match.suffix();
+			hostname = match.prefix();  //тут надо убирать www или нет?
+			tail = match.suffix();
+		}
+		else
+		{
+			hostname = host;
+			tail = addr;
 
+		}
 	}
 
 	void parse_img_link(vector<T> &link_list, T string_to_parse)
