@@ -3,6 +3,7 @@
 #include <string>
 
 #include "types.h"
+#include "parser_new.h"
 
 class Wget
 {
@@ -14,13 +15,15 @@ public:
 
 private:
 	void* m_curl;
+	parser<string> m_parser;
 	globalArgs_t m_cmdArg;
 	returnCodeStruct m_returnCode;
 
-	std::string getFileName(const std::string& url);
+	string getFileName(const std::string& url);
 	bool downloadImages(const std::string& url);
 	bool readSubLinks(int level, const std::string& url);
 	int read(const std::string& url);
 	bool process(const std::string& url, int level);
+	string getImageName(const string &url);
 };
 

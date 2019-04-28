@@ -9,7 +9,6 @@
 #include <fstream>
 #include <Windows.h>
 
-#include "parser_new.h"
 using namespace std;
 
 
@@ -35,6 +34,7 @@ size_t callbackfunction(void* ptr, size_t size, size_t nmemb, void* userdata)
 Wget::Wget()
 {
 	m_curl = curl_easy_init();
+	_ASSERTE(m_curl);
 }
 
 
@@ -58,6 +58,7 @@ bool Wget::process(const std::string& url, int level)
 {
 	int tries = m_cmdArg.tries;
 	int success = read(url);
+	
 	if (success == 1)
 	{
 		if (m_returnCode.http_code > 0 && (tries > 0))
@@ -83,6 +84,27 @@ bool Wget::process(const std::string& url, int level)
 	{
 		if (url == m_cmdArg.url)
 			return true;
+	}
+	else if (success == 0 || success == 2)
+	{
+		if (m_cmdArg.getImages)
+		{
+			std::vector<std::string> linkList;
+			string filename = getFileName(url);
+			std::ifstream ifs(filename);
+			std::string content((std::istreambuf_iterator<char>(ifs)),
+				(std::istreambuf_iterator<char>()));
+			m_parser.parse_img_link(linkList, content, url);
+			if (!linkList.empty())
+			{
+				for (string i : linkList)
+				{
+					cerr << i << endl;
+					downloadImages(i);
+				}
+			}
+
+		}
 	}
 
 	return true;
@@ -117,13 +139,12 @@ std::string Wget::getFileName(const std::string &url)
 
 bool Wget::readSubLinks(int level, const std::string& url)
 {
-	parser<string> p;
 	std::vector<std::string> linkList;
 	string filename = getFileName(url);
 	std::ifstream ifs(filename);
 	std::string content((std::istreambuf_iterator<char>(ifs)),
 		(std::istreambuf_iterator<char>()));
-	p.parse_link_r(linkList, content);
+	m_parser.parse_link_r(linkList, content);
 	
 	if (!linkList.empty())
 	{
@@ -141,6 +162,7 @@ int Wget::read(const std::string& url)
 	if (m_cmdArg.verbosity)
 	{
 		puts("Start downloading...");
+		cerr << url << endl;
 	}
 
 	char errbuf[CURL_ERROR_SIZE];
@@ -211,14 +233,33 @@ int Wget::read(const std::string& url)
 	return 0;
 }
 
+string Wget::getImageName(const string& url)
+{
+	if (m_cmdArg.verbosity)
+	{
+		puts("Get image filename ... ");
+	}
 
+	std::size_t found = url.find_last_of("/\\");
+	string str = url.substr(found + 1);
+	
+	if (!m_cmdArg.savedir.empty())
+	{
+		if (CreateDirectory(m_cmdArg.savedir.c_str(), NULL) ||
+			ERROR_ALREADY_EXISTS == GetLastError())
+		{
+			str = m_cmdArg.savedir + "/" + str;
+		}
+	}
+	return str;
+}
 bool Wget::downloadImages(const std::string& url)
 {
 	if (m_cmdArg.verbosity)
 	{
 		puts("Start downloading image...");
 	}
-	string image_name;
+	string image_name = getImageName(url);
 	FILE* fp = fopen(image_name.c_str(), "wb");
 	if (!fp)
 	{
@@ -226,13 +267,12 @@ bool Wget::downloadImages(const std::string& url)
 		return false;
 	}
 
-	CURL* curlCtx = curl_easy_init();
-	curl_easy_setopt(curlCtx, CURLOPT_URL, url);
-	curl_easy_setopt(curlCtx, CURLOPT_WRITEDATA, fp);
-	curl_easy_setopt(curlCtx, CURLOPT_WRITEFUNCTION, callbackfunction);
-	curl_easy_setopt(curlCtx, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt(m_curl, CURLOPT_URL, url.c_str());
+	curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, fp);
+	curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, callbackfunction);
+	curl_easy_setopt(m_curl, CURLOPT_FOLLOWLOCATION, 1);
 
-	CURLcode rc = curl_easy_perform(curlCtx);
+	CURLcode rc = curl_easy_perform(m_curl);
 	if (rc)
 	{
 		fprintf(stderr, "Failed to download: %s\n", url.c_str());
@@ -240,14 +280,12 @@ bool Wget::downloadImages(const std::string& url)
 	}
 
 	long res_code = 0;
-	curl_easy_getinfo(curlCtx, CURLINFO_RESPONSE_CODE, &res_code);
+	curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &res_code);
 	if (!((res_code == 200 || res_code == 201) && rc != CURLE_ABORTED_BY_CALLBACK))
 	{
 		fprintf(stderr, "Response code: %d\n", res_code);
 		return false;
 	}
-
-	curl_easy_cleanup(curlCtx);
 
 	fclose(fp);
 

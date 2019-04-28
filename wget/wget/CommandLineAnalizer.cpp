@@ -17,7 +17,7 @@ const option CommandLineAnalizer::longOpts[] = {
 	{ NULL, no_argument, NULL, 0 }
 };
 
-const char* CommandLineAnalizer::optString = "hu:rl:t:n:i:s:g:v?";
+const char* CommandLineAnalizer::optString = "hu:rl:t:n:i:s:gv?";
 
 void CommandLineAnalizer::show_usage(std::string name)
 {
