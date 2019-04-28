@@ -112,8 +112,13 @@ std::string Wget::getFileName(const std::string &url)
 
 bool Wget::readSubLinks(int level, const std::string& url)
 {
+	parser<string> p;
 	std::vector<std::string> linkList;
-
+	string filename = getFileName(url);
+	std::ifstream ifs(filename);
+	std::string content((std::istreambuf_iterator<char>(ifs)),
+		(std::istreambuf_iterator<char>()));
+	p.parse_link_r(linkList, content);
 	
 	if (!linkList.empty())
 	{
