@@ -131,7 +131,6 @@
   <ItemGroup>
     <ClCompile Include="CommandLineAnalizer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="test_parse2.cpp" />
     <ClCompile Include="wget.cpp" />
   </ItemGroup>
   <ItemGroup>

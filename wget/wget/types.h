@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-struct globalArgs_t
+static struct globalArgs_t
 {
 	std::string url;
 	bool recursive;

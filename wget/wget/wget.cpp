@@ -8,7 +8,7 @@
 #include <vector>
 #include <direct.h>
 #include <fstream>
-//#include "test_parse2.cpp"
+#include "parser_new.h"
 using namespace std;
 
 
@@ -45,6 +45,11 @@ Wget::~Wget()
 bool Wget::download(const globalArgs_t& cmdArguments)
 {
 	m_cmdArg = cmdArguments;
+	if (m_cmdArg.url.empty())
+	{
+		puts("Put Url to process");
+		return false;
+	}
 	return process(cmdArguments.url, m_cmdArg.level);
 }
 
@@ -108,6 +113,7 @@ std::string Wget::getFileName(const std::string &url)
 bool Wget::readSubLinks(int level, const std::string& url)
 {
 	std::vector<std::string> linkList;
+
 	
 	if (!linkList.empty())
 	{

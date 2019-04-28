@@ -10,7 +10,9 @@
 int main(int argc, char** argv)
 {
 	auto cmdAnalizer = CommandLineAnalizer::instance();
-	cmdAnalizer->setParameters(argc, argv);
+	bool setP = cmdAnalizer->setParameters(argc, argv);
+	if (!setP)
+		return 1;
 	Wget downloader;
 	bool result = downloader.download(cmdAnalizer->getCmdArgumentsObject());
 	

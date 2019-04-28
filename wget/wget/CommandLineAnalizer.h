@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 
-
 #include "types.h"
+
+struct option;
 
 	class CommandLineAnalizer
 	{
@@ -22,9 +23,9 @@
 
 		void show_usage(std::string name);
 		globalArgs_t getCmdArgumentsObject();
-		/*static const struct option longOpts[];*/
-		const char* optString;
-		void setParameters(int argc, char** argv);
+		static const struct option longOpts[];
+		static const char* optString;
+		bool setParameters(int argc, char** argv);
 	
 	private:
 		CommandLineAnalizer() {}

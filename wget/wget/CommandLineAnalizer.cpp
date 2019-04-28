@@ -3,7 +3,7 @@
 
 #include "CommandLineAnalizer.h"
 
-option longOpts[] = {
+const option CommandLineAnalizer::longOpts[] = {
 	{ "help", no_argument, NULL, 'h' },
 	{ "url", required_argument, NULL, 'u' },
 	{ "level", required_argument, NULL, 'l' },
@@ -17,7 +17,7 @@ option longOpts[] = {
 	{ NULL, no_argument, NULL, 0 }
 };
 
-std::string optString = "hu:rl:t:n:i:s:g:v?";
+const char* CommandLineAnalizer::optString = "hu:rl:t:n:i:s:g:v?";
 
 void CommandLineAnalizer::show_usage(std::string name)
 {
@@ -38,11 +38,11 @@ void CommandLineAnalizer::show_usage(std::string name)
 
 globalArgs_t CommandLineAnalizer::getCmdArgumentsObject()
 {
-	globalArgs.url = "kun.uz";
+	//globalArgs.url = "kun.uz";
 	return globalArgs;
 }
 
-void CommandLineAnalizer::setParameters(int argc, char** argv)
+bool CommandLineAnalizer::setParameters(int argc, char** argv)
 {
 #pragma region getopt
 	int opt = 0;
@@ -54,7 +54,7 @@ void CommandLineAnalizer::setParameters(int argc, char** argv)
 		case 'h':
 		case '?':
 			show_usage(argv[0]);
-			return ;
+			return false;
 
 		case 'u':
 			globalArgs.url = optarg;
@@ -89,7 +89,7 @@ void CommandLineAnalizer::setParameters(int argc, char** argv)
 			break;
 
 		case 'v':
-			CommandLineAnalizer::globalArgs.verbosity = true;
+			globalArgs.verbosity = true;
 			break;
 
 		default:
@@ -98,5 +98,6 @@ void CommandLineAnalizer::setParameters(int argc, char** argv)
 
 		opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
 	}
+	return true;
 #pragma endregion
 }
