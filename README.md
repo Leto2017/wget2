@@ -9,8 +9,8 @@ Option:<br/>
 -l --level=<uint> = depth of recursive webpages download by links from downloaded pages<br/>
 -t --tries=<uint> = the number of attempts to download the page before issuing an error<br/>
 -n --no-parent    = load pages no higher than a given hierarchy<br/>
--i --infile=<path> = path to the input txt- файлу со списком http-ссылок<br/>
--s --savedir=<path> = путь до папки, где сохранять html-страницы<br/>
--g --getimages = закачивать картинки с html страницы<br/>
--v --verbose = печатать в stdout подробно производимые операции, без этого флага печатать только ошибки<br/>
--h --help =  показать как использовать программу, выдать аргументы консоли<br/>
+-i --infile=<path> = path to the input txt-file with the list of http-links<br/>
+-s --savedir=<path> = path to the directory where html-page is stored<br/>
+-g --getimages = download images from html-page<br/>
+-v --verbose = print to stdout detailed operations, without this flag, print only errors<br/>
+-h --help =  show how to use the program, give console arguments<br/>

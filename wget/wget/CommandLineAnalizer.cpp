@@ -25,14 +25,14 @@ void CommandLineAnalizer::show_usage(std::string name)
 		<< "Options:\n"
 		<< "\t-u --url=<string> = the http-address to download web-page\n"
 		<< "\t-r --recursive       = load pages by links found in the download pages\n"
-		<< "\t-l --level=<uint> = глубина рекурсивного скачивания сайта по ссылкам на скачанных страницах\n"
-		<< "\t-t --tries=<uint> = число попыток скачать страницу до выдачи ошибки\n"
-		<< "\t-n --no-parent    = загружать страницы не выше по иерархии заданной\n"
-		<< "\t-i --infile=<path> = путь к входному txt файлу со списком http-ссылок\n"
-		<< "\t-s --savedir=<path> = путь до папки, где сохранять html-страницы\n"
-		<< "\t-g --getimages = закачивать картинки с html страницы\n"
-		<< "\t-v --verbose = печатать в stdout подробно производимые операции, без этого флага печатать только ошибки\n"
-		<< "\t-h --help =  показать как использовать программу, выдать аргументы консоли\n"
+		<< "\t-l --level=<uint> = depth of recursive webpages download by links from downloaded pages\n"
+		<< "\t-t --tries=<uint> = the number of attempts to download the page before issuing an error\n"
+		<< "\t-n --no-parent    = load pages no higher than a given hierarchy\n"
+		<< "\t-i --infile=<path> = path to the input txt-file with the list of http-links\n"
+		<< "\t-s --savedir=<path> = path to the directory where html-page is stored\n"
+		<< "\t-g --getimages = download images from html-page\n"
+		<< "\t-v --verbose = print to stdout detailed operations, without this flag, print only errors\n"
+		<< "\t-h --help =  show how to use the program, give console arguments\n"
 		<< std::endl;
 }
 
