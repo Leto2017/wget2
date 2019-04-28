@@ -5,7 +5,7 @@
  * @date        28/04/2019
  * All rights reserved.
  */
-#include <curl\curl.h>
+#include "curl\curl.h"
 #include <string>
 
 #include "types.h"
@@ -29,7 +29,7 @@ public:
 		\param[in] level - levels in
 		\returns -
 	*/
-	void setUrl(const string &url, int level);
+	bool setUrl(const string &url, int level);
 
 private:
 	void* m_curl;

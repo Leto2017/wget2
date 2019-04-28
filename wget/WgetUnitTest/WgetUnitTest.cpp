@@ -1,3 +1,4 @@
+#define CURL_STATICLIB
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../wget/wget.h"
@@ -12,9 +13,9 @@ namespace WgetUnitTest
 		
 		TEST_METHOD(TestMethod1)
 		{
-			std::string name = "Bill";
-			
-			Assert::AreEqual("1", "1");
+			Assert::AreEqual(1, 1);
+			Wget *myClass = new Wget();
+			Assert::IsTrue(myClass->setUrl("kun.uz", 1));
 		}
 	};
 }

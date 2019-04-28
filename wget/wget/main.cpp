@@ -15,6 +15,8 @@ int main(int argc, char** argv)
 		return 1;
 	Wget downloader;
 	bool result = downloader.download(cmdAnalizer->getCmdArgumentsObject());
+
+	cerr << "RESULT: " << (result ? "YES" : "NO") << endl;
 	
 	return 0;
 }
