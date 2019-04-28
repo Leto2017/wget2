@@ -8,6 +8,8 @@
 #include <vector>
 #include <direct.h>
 #include <fstream>
+#include <Windows.h>
+
 #include "parser_new.h"
 using namespace std;
 
@@ -98,12 +100,16 @@ std::string Wget::getFileName(const std::string &url)
 	std::string str = url;
 	str.erase(std::remove_if(str.begin(), str.end(),
 		[](unsigned char c) { return std::ispunct(c); }), str.end());
-	
+
 	if (!m_cmdArg.savedir.empty())
 	{
-		str = m_cmdArg.savedir + "/" + str;
+		if (CreateDirectory(m_cmdArg.savedir.c_str(), NULL) ||
+			ERROR_ALREADY_EXISTS == GetLastError())
+		{
+			str = m_cmdArg.savedir + "/" + str;
+		}
 	}
-
+	
 	str += ".html";
 	if (m_cmdArg.verbosity)
 		cout << "Filename: " << str << endl;
@@ -168,6 +174,7 @@ int Wget::read(const std::string& url)
 	if (redirect_url)
 		m_returnCode.location = redirect_url;
 
+	bool ok = false;
 	if (m_returnCode.http_code >= 500 && m_returnCode.http_code < 600)
 	{
 		if (m_cmdArg.verbosity)
@@ -182,19 +189,13 @@ int Wget::read(const std::string& url)
 	}
 	else if (m_returnCode.http_code == 200 && m_cmdArg.recursive && m_cmdArg.level > 1)
 	{
-		if (m_cmdArg.verbosity)
-			fprintf(stderr, "\nStatus code: (%d ) recursive with level %d", m_returnCode.http_code, m_cmdArg.level);
-		return 2;
+		ok = true;
 	}
 	if (m_cmdArg.verbosity)
 	{
 		fprintf(stderr, "\nCODE: (%d) ", m_returnCode.http_code);
 	}
 
-	if (!m_cmdArg.savedir.empty())
-	{
-		const int dir = _mkdir(m_cmdArg.savedir.c_str());
-	}
 	string filename = getFileName(url);
 	ofstream file;
 	file.open(filename);
@@ -202,12 +203,22 @@ int Wget::read(const std::string& url)
 
 	file.close();
 
+	if (ok)
+	{
+		if (m_cmdArg.verbosity)
+			fprintf(stderr, "\nStatus code: (%d ) recursive with level %d \n", m_returnCode.http_code, m_cmdArg.level);
+		return 2;
+	}
 	return 0;
 }
 
 
 bool Wget::downloadImages(const std::string& url)
 {
+	if (m_cmdArg.verbosity)
+	{
+		puts("Start downloading image...");
+	}
 	string image_name;
 	FILE* fp = fopen(image_name.c_str(), "wb");
 	if (!fp)

@@ -38,7 +38,6 @@ void CommandLineAnalizer::show_usage(std::string name)
 
 globalArgs_t CommandLineAnalizer::getCmdArgumentsObject()
 {
-	//globalArgs.url = "kun.uz";
 	return globalArgs;
 }
 
