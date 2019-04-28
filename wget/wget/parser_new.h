@@ -98,7 +98,7 @@ public:
 		}
 	}
 
-	void parse_img_link(vector<T> &link_list, T string_to_parse)
+	void parse_img_link(vector<T> &link_list, T string_to_parse, T head)
 	{
 		regex http_regex("<img.*src.*=.*\".*(?=\" )");
 
@@ -106,11 +106,14 @@ public:
 		
 		regex link_regex("\"([^\"]+)\"");
 
+		regex prot_regex("https{0,1}");
+
 		smatch http_match;
 		smatch link_match;
+		smatch match;
 
 		T tmp;
-		T buf;
+		string buf;
 
 		if (regex_search(string_to_parse, http_match, http_regex))
 		{
@@ -121,9 +124,16 @@ public:
 				if (regex_search(tmp, link_match, link_regex))
 				{
 
-					//buf = link_match[0];
+					buf = link_match[1].str();
 
-					link_list.push_back(link_match[1]);
+					regex_search(buf, match, prot_regex);
+
+					if (match.str() == "")
+					{
+						buf = head + buf;
+					}
+
+					link_list.push_back(buf);
 
 					/*for (size_t j = 0; j < link_match.size(); ++j)
 					{
