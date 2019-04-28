@@ -4,7 +4,6 @@
 #include "wget.h"
 #include <sstream>
 #include <iostream>
-#include <algorithm>
 #include <vector>
 #include <direct.h>
 #include <fstream>
