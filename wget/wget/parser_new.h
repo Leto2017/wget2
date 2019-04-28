@@ -35,7 +35,7 @@ public:
 
 
 	//--------------------------------------------------
-	/// \Method for recursive search for html-links
+	/// Method for recursive search for html-links
 	///
 	/// This function takes input string, searches links with tags "href" and 
 	/// returns them to the link list.
@@ -78,7 +78,7 @@ public:
 
 
 	//--------------------------------------------------
-	/// \Method for parsing html-link
+	/// Method for parsing html-link
 	///
 	/// Input:
 	///addr - address to parse
@@ -135,7 +135,7 @@ public:
 
 
 	//--------------------------------------------------
-	/// \Method for search for html-links to images
+	/// Method for search for html-links to images
 	///
 	/// This function takes input string, searches links with tags "img" and 
 	/// returns them to the link list. In case of not full path it adds "head" before the path.
