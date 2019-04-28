@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <regex>
@@ -7,6 +8,23 @@
 using namespace std;
 
 
+/*!
+* \file
+* \author Deyneka N. (dina_ukr@mail.ru)
+* \date   April, 2019
+* \brief  HTML-page parser
+*
+* \section DESCRIPTION
+*
+* parser - class for searching links in html-page
+*/
+
+
+#ifdef DOXYGEN
+#define TEMP_DET_DEBUG   ///< turn on debug stdout output and dump clustering states into a text file
+#define TEMP_DET_CLUSTS  ///< switch implementation of clustering method for RealTempDet
+#endif
+
 template <typename T>
 
 class parser
@@ -15,16 +33,21 @@ class parser
 public:
 	parser() {};
 
-	void parse_link_r(vector<T> &link_list, T string_to_parse)
+
+	//--------------------------------------------------
+	/// Method for recursive search for html-links
+	///
+	/// This function takes input string, searches links with tags "href" and 
+	/// returns them to the link list.
+
+	void parse_link_r(vector<T> &link_list, T string_to_parse)  
 	{
 
-		//const char *rg = R"((http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?)";
 
-		const char *rg_h = R"(<a\s*[^>]*href\s*=[^>]*>)";
+		const char *rg_h = R"(<a\s*[^>]*href\s*=[^>]*>)"; 
 
-		//const char *rg = "(https{0,1}:\/){0,1}\/+.*(?=\" )";
 
-		const char *rg = ("\"([^\"]+)\"");
+		const char *rg = ("\"([^\"]+)\""); 
 
 		regex http_regex(rg_h);
 		regex link_regex(rg);
@@ -52,8 +75,20 @@ public:
 		}
 
 	}
-	
-	void parse_hostname(T addr, T &protocol, T &hostname, T &tail, T prot, T host )
+
+
+	//--------------------------------------------------
+	/// Method for parsing html-link
+	///
+	/// Input:
+	///addr - address to parse
+	///protocol - where to save protocol
+	///hostname - where to save hostname
+	///tail - where to save path from the hostname
+	///prot - protocol to use in case of not full path
+	///host - hostname to use in case of not full path
+
+	void parse_hostname(T addr, T &protocol, T &hostname, T &tail, T prot, T host)
 	{
 		regex prot_regex("https{0,1}");
 
@@ -76,7 +111,7 @@ public:
 
 			tmp = addr;
 		}
-		else 
+		else
 			tmp = match.suffix();
 
 		regex_search(tmp, match, host_regex);
@@ -87,7 +122,7 @@ public:
 
 			regex_search(tmp, match, host2_regex);
 
-			hostname = match.prefix();  //тут надо убирать www или нет?
+			hostname = match.prefix();
 			tail = match.suffix();
 		}
 		else
@@ -98,12 +133,17 @@ public:
 		}
 	}
 
-	void parse_img_link(vector<T> &link_list, T string_to_parse, T head)
+
+	//--------------------------------------------------
+	/// Method for search for html-links to images
+	///
+	/// This function takes input string, searches links with tags "img" and 
+	/// returns them to the link list. In case of not full path it adds "head" before the path.
+
+	void parse_link_r(vector<T> &link_list, T string_to_parse, T head)
 	{
 		regex http_regex("<img.*src.*=.*\".*(?=\" )");
 
-		//regex link_regex("(https{0,1}:/){0,1}/+.*(?=\" )");
-		
 		regex link_regex("\"([^\"]+)\"");
 
 		regex prot_regex("https{0,1}");
@@ -120,7 +160,8 @@ public:
 
 			for (size_t i = 0; i < http_match.size(); ++i)
 			{
-				tmp = http_match[i].str();
+				tmp = http_match[i];
+
 				if (regex_search(tmp, link_match, link_regex))
 				{
 
@@ -135,15 +176,7 @@ public:
 
 					link_list.push_back(buf);
 
-					/*for (size_t j = 0; j < link_match.size(); ++j)
-					{
-						if (link_match[j].matched)
-						{
-							buf = link_match[j];
-							link_list.push_back(link_match[j]);
-						}
 
-					}*/
 				}
 
 			}
@@ -151,3 +184,5 @@ public:
 
 	}
 };
+
+
