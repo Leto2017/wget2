@@ -1,6 +1,12 @@
 #pragma once
 #include <string>
 
+/**
+ * @file        types.h
+ * @author      Kharisova Madina \<gkhmadina\@gmail.com\>
+ * @date        28/04/2019
+ * All rights reserved. 
+ */
 static struct globalArgs_t
 {
 	std::string url;

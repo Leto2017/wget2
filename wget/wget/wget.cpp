@@ -43,6 +43,14 @@ Wget::~Wget()
 	curl_easy_cleanup(m_curl);
 }
 
+void Wget::setUrl(const string& url, int level)
+{
+	m_cmdArg.url = url;
+	m_cmdArg.recursive = true;
+	m_cmdArg.level = level;
+	process(m_cmdArg.url, level);
+}
+
 bool Wget::download(const globalArgs_t& cmdArguments)
 {
 	m_cmdArg = cmdArguments;
