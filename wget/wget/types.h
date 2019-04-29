@@ -34,7 +34,7 @@ struct returnCodeStruct
 {
 	std::string error;
 	std::string location;
-	long http_code;
+	int http_code;
 
 	returnCodeStruct()
 	{

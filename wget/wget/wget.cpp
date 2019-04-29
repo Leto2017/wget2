@@ -301,3 +301,8 @@ bool Wget::downloadImages(const std::string& url)
 
 	return true;
 }
+
+returnCodeStruct Wget::getStatusCode()
+{
+	return m_returnCode;
+}

@@ -31,6 +31,11 @@ public:
 	*/
 	bool download(const string &url, int level);
 
+	/** Get code struct of last query
+		\returns struct of code
+	*/
+	returnCodeStruct getStatusCode();
+
 protected:
 	void* m_curl;
 	parser<string> m_parser;
