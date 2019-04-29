@@ -164,7 +164,7 @@ public:
 	/// This function takes input string, searches links with tags "img" and 
 	/// returns them to the link list. In case of not full path it adds "head" before the path.
 
-	void parse_link_r(vector<T> &link_list, T string_to_parse, T head)
+	void parse_img_link(vector<T> &link_list, T string_to_parse, T head)
 	{
 		regex http_regex(R"(<img\s*[^>]*src\s*=[^>]*>)");
 
@@ -189,7 +189,14 @@ public:
 
 			if (regex_search(tmp, link_match, link_regex))
 			{
-				buf = head + link_match[1].str();
+				regex_search(tmp, match, prot_regex);
+
+				if (match.str() == "")
+				{
+					buf = head + link_match[1].str();
+				}
+				else buf = link_match[1].str();
+
 				link_list.push_back(buf);
 			}
 
