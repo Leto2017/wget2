@@ -31,12 +31,12 @@ public:
 	*/
 	bool download(const string &url, int level);
 
-private:
+protected:
 	void* m_curl;
 	parser<string> m_parser;
 	globalArgs_t m_cmdArg;
 	returnCodeStruct m_returnCode;
-
+	
 	/** Get file name look like the name of parsing url
 		\param[in] url
 		\returns file name
@@ -76,3 +76,21 @@ private:
 	string getImageName(const string &url);
 };
 
+class TEST_CLASS : public Wget {
+public:
+	bool downloadImages(const string& url) {
+		return Wget::downloadImages(url);
+	}
+
+	bool readSubLinks(int level, const string& url){
+		return Wget::readSubLinks(level, url);
+	}
+
+	int read(const string& url) {
+		return Wget::read(url);
+	}
+
+	bool process(const string& url, int level) {
+		return Wget::process(url, level);
+	}
+};

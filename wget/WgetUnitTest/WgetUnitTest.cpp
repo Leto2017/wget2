@@ -11,11 +11,13 @@ namespace WgetUnitTest
 	{
 	public:
 		
-		TEST_METHOD(IntegrationTest)
+		TEST_METHOD(Test1)
 		{
 			Assert::AreEqual(1, 1);
 			Wget *myClass = new Wget();
 			Assert::IsTrue(myClass->download("kun.uz", 1));
 		}
+
+
 	};
 }

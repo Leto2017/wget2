@@ -103,7 +103,7 @@ bool Wget::process(const std::string& url, int level)
 			std::ifstream ifs(filename);
 			std::string content((std::istreambuf_iterator<char>(ifs)),
 				(std::istreambuf_iterator<char>()));
-			m_parser.parse_link_r(linkList, content, url);
+			m_parser.parse_img_link(linkList, content, url);
 			if (!linkList.empty())
 			{
 				for (string i : linkList)
