@@ -182,9 +182,7 @@ public:
 		if (regex_search(string_to_parse, http_match, http_regex))
 		{
 
-			for (size_t i = 0; i < http_match.size(); ++i)
-			{
-				tmp = http_match[i];
+				tmp = http_match[0];
 
 				if (regex_search(tmp, link_match, link_regex))
 				{
@@ -203,7 +201,6 @@ public:
 
 				}
 
-			}
 		}
 
 	}
