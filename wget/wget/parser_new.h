@@ -189,7 +189,8 @@ public:
 
 			if (regex_search(tmp, link_match, link_regex))
 			{
-				link_list.push_back(link_match[1].str());
+				buf = head + link_match[1].str();
+				link_list.push_back(buf);
 			}
 
 		}
