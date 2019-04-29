@@ -166,7 +166,7 @@ public:
 
 	void parse_link_r(vector<T> &link_list, T string_to_parse, T head)
 	{
-		regex http_regex("<img.*src.*=.*\".*(?=\" )");
+		regex http_regex("(<img\s*[^>]*src\s*=[^>]*>)");
 
 		regex link_regex("\"([^\"]+)\"");
 
