@@ -166,7 +166,7 @@ public:
 
 	void parse_link_r(vector<T> &link_list, T string_to_parse, T head)
 	{
-		regex http_regex("(<img\s*[^>]*src\s*=[^>]*>)");
+		regex http_regex(R"(<img\s*[^>]*src\s*=[^>]*>)");
 
 		regex link_regex("\"([^\"]+)\"");
 
@@ -179,27 +179,18 @@ public:
 		T tmp;
 		string buf;
 
-		if (regex_search(string_to_parse, http_match, http_regex))
+		T tmps = string_to_parse;
+
+		while (regex_search(tmps, http_match, http_regex))
 		{
+			tmp = http_match.str();
 
-				tmp = http_match[0];
+			tmps = http_match.suffix();
 
-				if (regex_search(tmp, link_match, link_regex))
-				{
-
-					buf = link_match[1].str();
-
-					regex_search(buf, match, prot_regex);
-
-					if (match.str() == "")
-					{
-						buf = head + buf;
-					}
-
-					link_list.push_back(buf);
-
-
-				}
+			if (regex_search(tmp, link_match, link_regex))
+			{
+				link_list.push_back(link_match[1].str());
+			}
 
 		}
 
