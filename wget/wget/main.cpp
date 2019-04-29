@@ -1,11 +1,5 @@
 #define _CRT_SECURE_NO_DEPRECATE
 
-#ifdef DOXYGEN
-#define TEMP_DET_DEBUG   ///< turn on debug stdout output and dump clustering states into a text file
-#define TEMP_DET_CLUSTS  ///< switch implementation of clustering method for RealTempDet
-#endif
-
-
 #include <string>
 #include <iostream>
 

@@ -4,7 +4,7 @@
  * @file        CommandLineAnalizer.h
  * @author      Kharisova Madina \<gkhmadina\@gmail.com\>
  * @date        28/04/2019
- * All rights reserved.
+ * All rights reserved. c++11
  */
 #include <string>
 
@@ -34,7 +34,7 @@ struct option;
 			\param[in] name of *.exe file
 			\returns result - 
 	   */
-		void show_usage(std::string name);
+		void show_usage(const std::string& name);
 
 		/*! Return setting of wget using getopt.h
 			\param[in] name of *.exe file
@@ -52,7 +52,7 @@ struct option;
 		static const struct option longOpts[];
 		static const char* optString;
 		
-	private:
+	private: 
 		CommandLineAnalizer() {}
 	
 		globalArgs_t globalArgs;

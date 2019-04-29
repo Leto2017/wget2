@@ -29,7 +29,7 @@ public:
 		\param[in] level - levels in
 		\returns -
 	*/
-	bool setUrl(const string &url, int level);
+	bool download(const string &url, int level);
 
 private:
 	void* m_curl;
@@ -41,13 +41,13 @@ private:
 		\param[in] url
 		\returns file name
 	*/
-	string getFileName(const std::string& url);
+	string getFileName(const string& url);
 
 	/** Download images using libcurl from the html page if getImages is on
 		\param[in] url
 		\returns result - success or not
 	*/
-	bool downloadImages(const std::string& url);
+	bool downloadImages(const string& url);
 
 	/** Download the content of links inside the html page if recursive is on and level more than 1
 		\param[in] url 
@@ -60,14 +60,14 @@ private:
 		\param[in] url
 		\returns result - flag to determine the result
 	*/
-	int read(const std::string& url);
+	int read(const string& url);
 
 	/** Main function to analize result 
 		\param[in] url
 		\param[in] level
 		\returns result - success or not
 	*/
-	bool process(const std::string& url, int level);
+	bool process(const string& url, int level);
 
 	/** Returns the name of file that should be created
 		\param[in] url

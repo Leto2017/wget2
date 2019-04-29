@@ -19,7 +19,7 @@ const option CommandLineAnalizer::longOpts[] = {
 
 const char* CommandLineAnalizer::optString = "hu:rl:t:n:i:s:gv?";
 
-void CommandLineAnalizer::show_usage(std::string name)
+void CommandLineAnalizer::show_usage(const std::string& name)
 {
 	std::cerr << "Usage: <option(s)> SOURCES"
 		<< "Options:\n"

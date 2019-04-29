@@ -13,8 +13,7 @@ using namespace std;
 
 
 size_t write_data(void* ptr, size_t size, size_t nmemb, void* stream) {
-	string data((const char*)ptr, (size_t)size * nmemb);
-	*((stringstream*)stream) << data << endl;
+	((string*)stream)->append((char*)ptr, size * nmemb);
 	return size * nmemb;
 }
 
@@ -23,7 +22,7 @@ size_t callbackfunction(void* ptr, size_t size, size_t nmemb, void* userdata)
 	FILE* stream = (FILE*)userdata;
 	if (!stream)
 	{
-		printf(" No stream\n");
+		fprintf(stderr, "\nNo stream");
 		return 0;
 	}
 
@@ -43,7 +42,7 @@ Wget::~Wget()
 	curl_easy_cleanup(m_curl);
 }
 
-bool Wget::setUrl(const string& url, int level)
+bool Wget::download(const string& url, int level)
 {
 	m_cmdArg.url = url;
 	m_cmdArg.recursive = true;
@@ -54,7 +53,7 @@ bool Wget::setUrl(const string& url, int level)
 bool Wget::download(const globalArgs_t& cmdArguments)
 {
 	m_cmdArg = cmdArguments;
-	if (m_cmdArg.url.empty())
+	if (m_cmdArg.url.empty() && m_cmdArg.verbosity)
 	{
 		puts("Put Url to process");
 		return false;
@@ -104,7 +103,7 @@ bool Wget::process(const std::string& url, int level)
 			std::ifstream ifs(filename);
 			std::string content((std::istreambuf_iterator<char>(ifs)),
 				(std::istreambuf_iterator<char>()));
-			m_parser.parse_img_link(linkList, content, url);
+			m_parser.parse_link_r(linkList, content, url);
 			if (!linkList.empty())
 			{
 				for (string i : linkList)
@@ -128,7 +127,7 @@ std::string Wget::getFileName(const std::string &url)
 		puts("Get filename ... ");
 	}
 
-	std::string str = url;
+	string str = url;
 	str.erase(std::remove_if(str.begin(), str.end(),
 		[](unsigned char c) { return std::ispunct(c); }), str.end());
 
@@ -147,15 +146,16 @@ std::string Wget::getFileName(const std::string &url)
 	return str;
 }
 
-bool Wget::readSubLinks(int level, const std::string& url)
+bool Wget::readSubLinks(int level, const string& url)
 {
-	std::vector<std::string> linkList;
+	vector<string> linkList;
 	string filename = getFileName(url);
 	std::ifstream ifs(filename);
 	std::string content((std::istreambuf_iterator<char>(ifs)),
 		(std::istreambuf_iterator<char>()));
 	m_parser.parse_link_r(linkList, content);
-	
+	m_parser.add_head(linkList, url);
+
 	if (!linkList.empty())
 	{
 		for (string i : linkList)
@@ -182,7 +182,7 @@ int Wget::read(const std::string& url)
 	errbuf[0] = 0;
 	curl_easy_setopt(m_curl, CURLOPT_NOSIGNAL, 1);
 	curl_easy_setopt(m_curl, CURLOPT_ACCEPT_ENCODING, "deflate");
-	std::stringstream out;
+	string out;
 	curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, write_data);
 	curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, &out);
 	//curl_easy_setopt(m_curl, CURLOPT_VERBOSE, m_cmdArg.verbosity ? 1 : 0);
@@ -230,7 +230,7 @@ int Wget::read(const std::string& url)
 	string filename = getFileName(url);
 	ofstream file;
 	file.open(filename);
-	file << out.str();
+	file << out;
 
 	file.close();
 
