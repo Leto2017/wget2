@@ -19,12 +19,6 @@ using namespace std;
 * parser - class for searching links in html-page
 */
 
-
-#ifdef DOXYGEN
-#define TEMP_DET_DEBUG   ///< turn on debug stdout output and dump clustering states into a text file
-#define TEMP_DET_CLUSTS  ///< switch implementation of clustering method for RealTempDet
-#endif
-
 template <typename T>
 
 class parser
