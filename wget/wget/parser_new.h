@@ -29,11 +29,12 @@ public:
 
 
 	//--------------------------------------------------
-	/// Method for recursive search for html-links
-	///
-	/// This function takes input string, searches links with tags "href" and 
-	/// returns them to the link list.
-
+	
+	//--------------------------------------------------
+	/*! Method for recursive search for html-links
+	\param[in] link_list - a list for links, which were found in input string
+	\param[in] string_to_parse - string which should be parsed
+	*/
 	void parse_link_r(vector<T> &link_list, T string_to_parse)  
 	{
 
@@ -72,9 +73,10 @@ public:
 
 	
 	//--------------------------------------------------
-	/// Method for making full path from html-links
-	///
-	/// In case of not full path it adds "head" before the path.
+	/*! Method for making full path from html-links
+	\param[in] link_list - a list for links, which were found in input string
+	\param[in] head - the beginning of a links, which is added to them in case of incomplete path
+	*/
 
 
 	void add_head(vector<T> &link_list, T head)
@@ -102,16 +104,14 @@ public:
 	}
 
 	//--------------------------------------------------
-	/// Method for parsing html-link
-	///
-	/// Input:
-	///addr - address to parse
-	///protocol - where to save protocol
-	///hostname - where to save hostname
-	///tail - where to save path from the hostname
-	///prot - protocol to use in case of not full path
-	///host - hostname to use in case of not full path
-
+	/*! Method for parsing html-link
+	\param[in] addr - address to parse
+	\param[in] protocol - where to save protocol
+	\param[in] hostname - where to save hostname
+	\param[in] tail - where to save path from the hostname
+	\param[in] prot - protocol to use in case of not full path
+	\param[in] host - hostname to use in case of not full path
+	*/
 	void parse_hostname(T addr, T &protocol, T &hostname, T &tail, T prot, T host)
 	{
 		regex prot_regex("https{0,1}");
@@ -159,10 +159,12 @@ public:
 
 
 	//--------------------------------------------------
-	/// Method for search for html-links to images
-	///
-	/// This function takes input string, searches links with tags "img" and 
-	/// returns them to the link list. In case of not full path it adds "head" before the path.
+	//--------------------------------------------------
+	/*! Method for recursive search for html-links for images
+	\param[in] link_list - a list for links, which were found in input string
+	\param[in] string_to_parse - string which should be parsed
+	\param[in] head - the beginning of a links, which is added to them in case of incomplete path
+	*/
 
 	void parse_img_link(vector<T> &link_list, T string_to_parse, T head)
 	{
