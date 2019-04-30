@@ -36,17 +36,8 @@ namespace WgetUnitTest
 			returnCodeStruct codeStruct = testClass.getStatusCode();
 			Assert::AreEqual(404, codeStruct.http_code);
 		}
-
-	};
-}
-
-namespace ParserUnitTest
-{		
-	TEST_CLASS(ParserUnitTest)
-	{
-	public:
 		
-		TEST_METHOD(TestMethodParseLink)
+		TEST_METHOD(Test4)
 		{
 			std::vector<string> vec;
 			std::string tag = "<noscript><div><a href=\"https://mc.yandex.ru/watch/22022599\">";
@@ -59,7 +50,7 @@ namespace ParserUnitTest
 			Assert::AreEqual(res, vec[0]);
 		}
 
-		TEST_METHOD(TestMethodParseImg)
+		TEST_METHOD(Test5)
 		{
 			std::vector<string> vec;
 			std::string tag = "<noscript><div><img src=\"https://mc.yandex.ru/watch/22022599\">";
@@ -74,7 +65,7 @@ namespace ParserUnitTest
 			Assert::AreEqual(res, vec[0]);
 		}
 
-		TEST_METHOD(TestMethodParseHostname)
+		TEST_METHOD(Test6)
 		{
 			std::string tag = "https://mc.yandex.ru/watch/22022599";
 
@@ -95,7 +86,7 @@ namespace ParserUnitTest
 			Assert::AreEqual(e_tail, tail);
 		}
 
-		TEST_METHOD(TestMethodAddhead)
+		TEST_METHOD(Tes7)
 		{
 			parser<string> p;
 
@@ -111,6 +102,7 @@ namespace ParserUnitTest
 
 			Assert::AreEqual(res, vec[0]);
 		}
+
 
 	};
 }
