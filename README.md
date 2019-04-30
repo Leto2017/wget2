@@ -28,6 +28,11 @@ Option:<br/>
   -v --verbose = print to stdout detailed operations, without this flag, print only errors<br/>
   -h --help =  show how to use the program, give console arguments<br/>
   
+  
+### Unit tests
+
+In the solution above there is a project for unit tests (WgetUnitTest). The project is based on Microsoft Visual Studio C++ Native Unit Test Project. Unit tests may be run is a classical way using Visual Studio Test Explorer.
+
  ### Additional information
 
 ### libcurl
@@ -52,9 +57,13 @@ This projuct uses curl library. So if you don't have one, install it by followin
  
 NOTE that youe pather to curl library could differ from mentioned, so use your paths.
   
-###getopt.h
+### getopt
 
 This project also uses getopt library. 
 
 You can get one here: https://github.com/skandhurkat/Getopt-for-Visual-Studio
+
+## Authors
+
+Kharisova Madina and Deyneka Natalya.
 
