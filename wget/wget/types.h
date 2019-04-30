@@ -41,5 +41,14 @@ struct returnCodeStruct
 	returnCodeStruct()
 	{
 		http_code = 0;
+		curlCode = 0;
+	}
+
+	void clear()
+	{
+		error.clear();
+		location.clear();
+		int http_code = 0;
+		int curlCode = 0;
 	}
 };

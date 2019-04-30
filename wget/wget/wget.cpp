@@ -127,9 +127,17 @@ std::string Wget::getFileName(const std::string &url)
 		puts("Get filename ... ");
 	}
 
-	string str = url;
-	str.erase(std::remove_if(str.begin(), str.end(),
-		[](unsigned char c) { return std::ispunct(c); }), str.end());
+	string str;
+	if (m_cmdArg.filename.empty())
+	{
+		str = url;
+		str.erase(std::remove_if(str.begin(), str.end(),
+			[](unsigned char c) { return std::ispunct(c); }), str.end());
+	}
+	else
+	{
+		str = m_cmdArg.filename;
+	}
 
 	if (!m_cmdArg.savedir.empty())
 	{
@@ -169,6 +177,7 @@ bool Wget::readSubLinks(int level, const string& url)
 
 int Wget::read(const std::string& url)
 {
+	m_returnCode.clear();
 	if (m_cmdArg.verbosity)
 	{
 		puts("Start downloading...");
@@ -189,8 +198,10 @@ int Wget::read(const std::string& url)
 	CURLcode res = curl_easy_perform(m_curl);
 	m_returnCode.http_code = 0;
 	curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &m_returnCode.http_code);
+
 	m_returnCode.error = errbuf;
 	m_returnCode.curlCode = res;
+
 	if (res != CURLE_OK) {
 		size_t len = strlen(errbuf);
 		fprintf(stderr, "\nlibcurl: (%d) ", res);
@@ -199,7 +210,6 @@ int Wget::read(const std::string& url)
 			((errbuf[len - 1] != '\n') ? "\n" : ""));
 		else
 			fprintf(stderr, "%s\n", curl_easy_strerror(res));
-		return false;
 	}
 
 	char* redirect_url = NULL;
@@ -207,6 +217,9 @@ int Wget::read(const std::string& url)
 	if (redirect_url)
 		m_returnCode.location = redirect_url;
 
+	if (res != CURLE_OK)
+		return false;
+	
 	bool ok = false;
 	if (m_returnCode.http_code >= 500 && m_returnCode.http_code < 600)
 	{

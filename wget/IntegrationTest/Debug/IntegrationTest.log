@@ -1,0 +1,3 @@
+﻿  IntegrationTest.cpp
+F:\wget\wget\wget\types.h(32): warning C4091: 'static ': ignored on left of 'globalArgs_t' when no variable is declared
+LINK : fatal error LNK1104: cannot open file 'F:\wget\wget\Debug\IntegrationTest.exe'
