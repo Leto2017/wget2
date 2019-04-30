@@ -34,7 +34,7 @@ namespace WgetUnitTest
 			TEST_CLASS testClass;
 			int result = testClass.read("m_kun.uzv");
 			returnCodeStruct codeStruct = testClass.getStatusCode();
-			Assert::AreEqual(404, codeStruct.http_code);
+			Assert::AreEqual(int(CURLE_OK), codeStruct.curlCode);
 		}
 		
 		TEST_METHOD(Test4)

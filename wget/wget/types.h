@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+
 /**
  * @file        types.h
  * @author      Kharisova Madina \<gkhmadina\@gmail.com\>
@@ -35,6 +36,7 @@ struct returnCodeStruct
 	std::string error;
 	std::string location;
 	int http_code;
+	int curlCode;
 
 	returnCodeStruct()
 	{

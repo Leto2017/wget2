@@ -189,6 +189,8 @@ int Wget::read(const std::string& url)
 	CURLcode res = curl_easy_perform(m_curl);
 	m_returnCode.http_code = 0;
 	curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &m_returnCode.http_code);
+	m_returnCode.error = errbuf;
+	m_returnCode.curlCode = res;
 	if (res != CURLE_OK) {
 		size_t len = strlen(errbuf);
 		fprintf(stderr, "\nlibcurl: (%d) ", res);
