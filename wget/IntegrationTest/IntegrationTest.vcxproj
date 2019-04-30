@@ -163,12 +163,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IntegrationTest.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\wget\wget.vcxproj">
       <Project>{fd8b8c6a-cbc2-43ef-b943-c0a3a966160f}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="IntegrationTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

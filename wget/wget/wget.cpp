@@ -177,7 +177,6 @@ bool Wget::readSubLinks(int level, const string& url)
 
 int Wget::read(const std::string& url)
 {
-	m_returnCode.clear();
 	if (m_cmdArg.verbosity)
 	{
 		puts("Start downloading...");
