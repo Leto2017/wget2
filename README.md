@@ -34,7 +34,7 @@ Option:<br/>
 In the solution above there is a project for unit tests (WgetUnitTest). The project is based on Microsoft Visual Studio C++ Native Unit Test Project. Unit tests may be run is a classical way using Visual Studio Test Explorer.
 
 ### Integration test
-In the solution above there is a project for unit tests (IntegrationTest). Testing this project and GNU WGET.
+In the solution above there is a project for integration test (IntegrationTest). Testing this project and GNU WGET.
 
  ### Additional information
 
