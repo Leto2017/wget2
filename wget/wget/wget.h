@@ -27,7 +27,7 @@ public:
 	/** Download the content of html page. This is the start function of class
 		\param[in] url - address of page to download
 		\param[in] level - levels in
-		\returns -
+		\returns - result - success or not
 	*/
 	bool download(const string &url, int level);
 
@@ -55,8 +55,8 @@ protected:
 	bool downloadImages(const string& url);
 
 	/** Download the content of links inside the html page if recursive is on and level more than 1
-		\param[in] url 
 		\param[in] level
+		\param[in] url 
 		\returns result - success or not
 	*/
 	bool readSubLinks(int level, const string& url);
