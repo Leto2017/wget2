@@ -34,7 +34,7 @@ public:
 	/** Get code struct of last query
 		\returns struct of code
 	*/
-	returnCodeStruct getStatusCode();
+	returnCodeStruct getStatusCode() const;
 
 protected:
 	void* m_curl;
@@ -46,13 +46,13 @@ protected:
 		\param[in] url
 		\returns file name
 	*/
-	string getFileName(const string& url);
+	string getFileName(const string& url) const;
 
 	/** Download images using libcurl from the html page if getImages is on
 		\param[in] url
 		\returns result - success or not
 	*/
-	bool downloadImages(const string& url);
+	bool downloadImages(const string& url) const;
 
 	/** Download the content of links inside the html page if recursive is on and level more than 1
 		\param[in] level
@@ -78,7 +78,7 @@ protected:
 		\param[in] url
 		\returns result - name of image file
 	*/
-	string getImageName(const string &url);
+	string getImageName(const string &url) const;
 };
 
 class TEST_CLASS : public Wget {

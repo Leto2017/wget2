@@ -21,12 +21,10 @@ size_t callbackfunction(void* ptr, size_t size, size_t nmemb, void* userdata)
 {
 	FILE* stream = (FILE*)userdata;
 	if (!stream)
-	{
-		fprintf(stderr, "\nNo stream");
 		return 0;
-	}
-
+	
 	size_t written = fwrite((FILE*)ptr, size, nmemb, stream);
+	stream = NULL;
 	return written;
 }
 
@@ -120,7 +118,7 @@ bool Wget::process(const std::string& url, int level)
 }
 
 
-std::string Wget::getFileName(const std::string &url)
+std::string Wget::getFileName(const std::string &url) const
 {
 	if (m_cmdArg.verbosity)
 	{
@@ -175,7 +173,7 @@ bool Wget::readSubLinks(int level, const string& url)
 	return true;
 }
 
-int Wget::read(const std::string& url)
+int Wget::read(const std::string& url) 
 {
 	if (m_cmdArg.verbosity)
 	{
@@ -185,7 +183,6 @@ int Wget::read(const std::string& url)
 
 	char errbuf[CURL_ERROR_SIZE];
 	curl_easy_setopt(m_curl, CURLOPT_URL, url.c_str());
-	//curl_easy_setopt(m_curl, CURLOPT_FOLLOWLOCATION, 1L);
 	curl_easy_setopt(m_curl, CURLOPT_ERRORBUFFER, errbuf);
 	errbuf[0] = 0;
 	curl_easy_setopt(m_curl, CURLOPT_NOSIGNAL, 1);
@@ -193,7 +190,6 @@ int Wget::read(const std::string& url)
 	string out;
 	curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, write_data);
 	curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, &out);
-	//curl_easy_setopt(m_curl, CURLOPT_VERBOSE, m_cmdArg.verbosity ? 1 : 0);
 	CURLcode res = curl_easy_perform(m_curl);
 	m_returnCode.http_code = 0;
 	curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, &m_returnCode.http_code);
@@ -216,6 +212,7 @@ int Wget::read(const std::string& url)
 	if (redirect_url)
 		m_returnCode.location = redirect_url;
 
+	redirect_url = NULL;
 	if (res != CURLE_OK)
 		return false;
 	
@@ -257,7 +254,7 @@ int Wget::read(const std::string& url)
 	return 0;
 }
 
-string Wget::getImageName(const string& url)
+string Wget::getImageName(const string& url) const
 {
 	if (m_cmdArg.verbosity)
 	{
@@ -277,7 +274,7 @@ string Wget::getImageName(const string& url)
 	}
 	return str;
 }
-bool Wget::downloadImages(const std::string& url)
+bool Wget::downloadImages(const std::string& url) const
 {
 	if (m_cmdArg.verbosity)
 	{
@@ -316,7 +313,7 @@ bool Wget::downloadImages(const std::string& url)
 	return true;
 }
 
-returnCodeStruct Wget::getStatusCode()
+returnCodeStruct Wget::getStatusCode() const
 {
 	return m_returnCode;
 }
