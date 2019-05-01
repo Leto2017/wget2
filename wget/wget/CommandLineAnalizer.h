@@ -32,13 +32,11 @@ struct option;
 
 		/*! Show the command line arguments suitable for wget
 			\param[in] name of *.exe file
-			\returns result - 
 	   */
 		void show_usage(const std::string& name);
 
 		/*! Return setting of wget using getopt.h
 			\param[in] name of *.exe file
-			\returns result -
 	   */
 		globalArgs_t getCmdArgumentsObject();
 
